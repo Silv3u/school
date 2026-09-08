@@ -30,7 +30,7 @@
             <span>Player</span>
         </div>
 
-    </nav>
+    </nav> //_static_cast
 
 
     <!-- GAME AREA -->
