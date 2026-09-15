@@ -6,7 +6,7 @@
 
     <title>My Game</title>
 
-    <link rel="stylesheet" href="{{ asset('css/game.css') }}">
+    @vite(['resources/css/game.css', 'resources/js/game.js'])
 </head>
 
 <body>
@@ -30,7 +30,7 @@
             <span>Player</span>
         </div>
 
-    </nav> //_static_cast
+    </nav> 
 
 
     <!-- GAME AREA -->
