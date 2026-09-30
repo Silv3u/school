@@ -92,6 +92,29 @@ body {
     font-weight: bold;
 }
 
+.nav-action {
+    border: none;
+    background: none;
+
+    color: #666;
+
+    font-size: 12px;
+    font-family: inherit;
+
+    cursor: pointer;
+    text-decoration: none;
+
+    transition: 0.2s;
+}
+
+.nav-action:hover {
+    color: #9d4edd;
+}
+
+.logout-form {
+    display: inline;
+}
+
 
 /* =========================
    GAME PAGE

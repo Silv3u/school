@@ -19,18 +19,22 @@
         </div>
 
         <div class="nav-links">
-            <a href="#">Home</a>
-            <a href="#">Play</a>
-            <a href="#">Shop</a>
-            <a href="#">Leaderboard</a>
+            <a href="{{ route('dashboard') }}">Home</a>
+            <a href="{{ route('game') }}">Play</a>
+            <a href="{{ route('cars.select') }}">Garage</a>
         </div>
 
         <div class="profile">
-            <div class="avatar">P</div>
-            <span>Player</span>
+            <div class="avatar">{{ strtoupper(substr(Auth::user()->name, 0, 1)) }}</div>
+            <span>{{ Auth::user()->name }}</span>
+            <a href="{{ route('profile.edit') }}" class="nav-action">Profile</a>
+            <form method="POST" action="{{ route('logout') }}" class="logout-form">
+                @csrf
+                <button type="submit" class="nav-action">Log out</button>
+            </form>
         </div>
 
-    </nav> 
+    </nav>
 
 
     <!-- GAME AREA -->
@@ -39,7 +43,11 @@
         <div class="game-header">
             <div>
                 <h1>Game name</h1>
-                <p>Game description</p>
+                @if ($selectedCar)
+                    <p>Driving the <strong style="color: {{ $selectedCar->color }}">{{ $selectedCar->name() }}</strong> &middot; <a href="{{ route('cars.select') }}" style="color:#9d4edd;">change car</a></p>
+                @else
+                    <p><a href="{{ route('cars.select') }}" style="color:#9d4edd;">Choose a car</a> before you race!</p>
+                @endif
             </div>
 
             <div class="game-status">
@@ -75,8 +83,17 @@
 
     </main>
 
+    @php
+        $playerCar = $selectedCar ? [
+            'name' => $selectedCar->name(),
+            'color' => $selectedCar->color,
+            'speed_rating' => $selectedCar->speed_rating,
+        ] : null;
+    @endphp
 
-    <script src="{{ asset('js/game.js') }}"></script>
+    <script>
+        window.PLAYER_CAR = @json($playerCar);
+    </script>
 
 </body>
 </html>

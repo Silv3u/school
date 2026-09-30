@@ -1,0 +1,221 @@
+/* =========================
+   DASHBOARD PAGE
+========================= */
+
+.dash-page {
+    width: min(1100px, 95%);
+
+    margin: 0 auto;
+
+    padding: 45px 0 70px;
+}
+
+
+/* HERO / WELCOME BANNER */
+
+.dash-hero {
+    position: relative;
+    overflow: hidden;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 20px;
+
+    padding: 35px 40px;
+    margin-bottom: 25px;
+
+    background: linear-gradient(135deg, #1a0f2e 0%, #0c0c13 70%);
+    border: 1px solid #242432;
+
+    box-shadow: 0 0 60px rgba(157, 78, 221, 0.08);
+}
+
+.dash-hero::before {
+    content: "";
+    position: absolute;
+
+    top: -60px;
+    right: -60px;
+
+    width: 220px;
+    height: 220px;
+
+    background: radial-gradient(circle, rgba(157, 78, 221, 0.25), transparent 70%);
+}
+
+.dash-hero h1 {
+    font-size: 28px;
+    margin-bottom: 8px;
+}
+
+.dash-hero p {
+    color: #888;
+    font-size: 14px;
+}
+
+.dash-hero .date {
+    color: #555;
+    font-size: 11px;
+    font-weight: bold;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+
+/* GARAGE STATUS STRIP */
+
+.garage-status {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 15px;
+
+    padding: 20px 25px;
+    margin-bottom: 25px;
+
+    background: #0c0c13;
+    border: 1px solid #1d1d28;
+}
+
+.garage-status .car-info {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.garage-status .swatch {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+.garage-status .label {
+    margin-bottom: 4px;
+}
+
+.garage-status strong {
+    font-size: 15px;
+}
+
+.garage-status .empty {
+    color: #888;
+    font-size: 13px;
+}
+
+
+/* BUTTONS */
+
+.btn {
+    display: inline-block;
+
+    padding: 12px 24px;
+
+    background: #9d4edd;
+    color: white;
+
+    font-size: 12px;
+    font-weight: bold;
+    letter-spacing: 1px;
+
+    text-decoration: none;
+    text-align: center;
+
+    border: none;
+    cursor: pointer;
+
+    transition: 0.2s;
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 0 20px rgba(157, 78, 221, 0.5);
+}
+
+.btn-outline {
+    background: transparent;
+    color: #9d4edd;
+    border: 1px solid #9d4edd;
+}
+
+.btn-outline:hover {
+    background: rgba(157, 78, 221, 0.1);
+    box-shadow: none;
+}
+
+
+/* QUICK ACTION CARDS */
+
+.dash-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+
+.dash-card {
+    display: block;
+
+    padding: 25px;
+
+    background: #0c0c13;
+    border: 1px solid #1d1d28;
+
+    color: inherit;
+    text-decoration: none;
+
+    transition: 0.2s;
+}
+
+.dash-card:hover {
+    border-color: #9d4edd;
+    transform: translateY(-3px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+}
+
+.dash-card .icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 36px;
+    height: 36px;
+    margin-bottom: 16px;
+
+    background: rgba(157, 78, 221, 0.12);
+    color: #9d4edd;
+
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.dash-card h3 {
+    font-size: 15px;
+    margin-bottom: 6px;
+}
+
+.dash-card p {
+    color: #666;
+    font-size: 13px;
+    line-height: 1.5;
+}
+
+
+/* MOBILE */
+
+@media (max-width: 700px) {
+    .dash-hero {
+        padding: 25px;
+    }
+
+    .dash-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .garage-status {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}

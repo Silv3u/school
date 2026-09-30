@@ -6,8 +6,10 @@ import tailwindcss from '@tailwindcss/vite';
 export default defineConfig({
     plugins: [
         laravel({
-            input: ['resources/css/game.css', 'resources/js/game.js',
-                    'resources/css/app.css', 'resources/js/app.js'
+            input: [
+                'resources/css/game.css', 'resources/js/game.js',
+                'resources/css/cars.css', 'resources/js/cars.js',
+                'resources/css/dashboard.css',
             ],
             refresh: true,
             fonts: [

@@ -23,13 +23,25 @@ document.addEventListener('DOMContentLoaded', () => {
   let running = false;
   let animationId = null;
 
+  const playerCar = window.PLAYER_CAR || null;
+
   function createDots() {
     dots = Array.from({ length: DOT_COUNT }, (_, i) => ({
       angle: (Math.PI * 2 * i) / DOT_COUNT,
       speed: 0.01 + Math.random() * 0.02,
       color: COLORS[i % COLORS.length],
       laps: 0,
+      label: null,
     }));
+
+    // The player races as the first dot, using their chosen car.
+    if (playerCar) {
+      dots[0].color = playerCar.color;
+      dots[0].label = playerCar.name;
+      // speed_rating (1-5) nudges the player's pace within the normal range.
+      dots[0].speed = 0.01 + (playerCar.speed_rating / 5) * 0.02;
+    }
+
     previousAngles = dots.map((d) => d.angle);
   }
 
@@ -80,8 +92,9 @@ document.addEventListener('DOMContentLoaded', () => {
     sorted.forEach((dot, i) => {
       ctx.fillStyle = dot.color;
       ctx.fillRect(10, 10 + i * 20, 12, 12);
-      ctx.fillStyle = '#eee';
-      ctx.fillText(`Lap ${dot.laps}`, 28, 21 + i * 20);
+      ctx.fillStyle = dot.label ? dot.color : '#eee';
+      const text = dot.label ? `${dot.label} (YOU) — Lap ${dot.laps}` : `Lap ${dot.laps}`;
+      ctx.fillText(text, 28, 21 + i * 20);
     });
   }
 

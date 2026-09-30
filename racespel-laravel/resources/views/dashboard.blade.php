@@ -1,52 +1,99 @@
-@vite(['resources/css/game.css', 'resources/js/game.js'])
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<x-app-layout>
-    <x-slot name="header">
-        <div class="flex items-center justify-between">
-            <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-                {{ __('Dashboard') }}
-            </h2>
-            <span class="text-sm text-gray-500 dark:text-gray-400">
-                {{ now()->format('l, d M Y') }}
-            </span>
+    <title>Dashboard</title>
+
+    @vite(['resources/css/game.css', 'resources/css/dashboard.css'])
+</head>
+
+<body>
+
+    <!-- NAVBAR -->
+    <nav class="navbar">
+
+        <div class="logo">
+            MY<span>GAME</span>
         </div>
-    </x-slot>
 
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
+        <div class="nav-links">
+            <a href="{{ route('dashboard') }}">Home</a>
+            <a href="{{ route('game') }}">Play</a>
+            <a href="{{ route('cars.select') }}">Garage</a>
+        </div>
 
-            {{-- Welcome banner --}}
-            <div class="relative overflow-hidden rounded-xl shadow-sm bg-gradient-to-r from-indigo-600 to-purple-600">
-                <div class="absolute inset-0 opacity-10 bg-[radial-gradient(circle_at_top_right,_white,_transparent_60%)]"></div>
-                <div class="relative p-8">
-                    <h3 class="text-2xl font-bold text-white">
-                        Welcome back, {{ Auth::user()->name ?? 'friend' }} 👋
-                    </h3>
-                </div>
+        <div class="profile">
+            <div class="avatar">{{ strtoupper(substr(Auth::user()->name, 0, 1)) }}</div>
+            <span>{{ Auth::user()->name }}</span>
+            <a href="{{ route('profile.edit') }}" class="nav-action">Profile</a>
+            <form method="POST" action="{{ route('logout') }}" class="logout-form">
+                @csrf
+                <button type="submit" class="nav-action">Log out</button>
+            </form>
+        </div>
+
+    </nav>
+
+
+    <!-- DASHBOARD AREA -->
+    <main class="dash-page">
+
+        <!-- WELCOME BANNER -->
+        <div class="dash-hero">
+            <div>
+                <h1>Welcome back, {{ Auth::user()->name }} 👋</h1>
+                <p>Ready to hit the track?</p>
             </div>
+            <span class="date">{{ now()->format('l, d M Y') }}</span>
+        </div>
 
-            {{-- Quick links navbar --}}
-            <nav class="bg-white dark:bg-gray-800 rounded-xl shadow-sm px-4 py-3">
-                <div class="flex flex-wrap items-center gap-2">
-                    <a href="{{ route('profile.edit') }}"
-                       class="px-4 py-2 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-medium transition">
-                        Edit Profile
-                    </a>
-                    <a href="#"
-                       class="px-4 py-2 rounded-lg text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 text-sm font-medium transition">
-                        Order History
-                    </a>
-                    <a href="#"
-                       class="px-4 py-2 rounded-lg text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 text-sm font-medium transition">
-                        Account Settings
-                    </a>
-                    <a href="#"
-                       class="px-4 py-2 rounded-lg text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 text-sm font-medium transition">
-                        Contact Support
-                    </a>
+        @if (session('status'))
+            <div class="cars-status">{{ session('status') }}</div>
+        @endif
+
+        <!-- GARAGE STATUS -->
+        <div class="garage-status">
+            @if ($selectedCar)
+                <div class="car-info">
+                    <span class="swatch" style="background: {{ $selectedCar->color }}; box-shadow: 0 0 14px {{ $selectedCar->color }};"></span>
+                    <div>
+                        <span class="label">CURRENTLY DRIVING</span>
+                        <strong style="color: {{ $selectedCar->color }}">{{ $selectedCar->name() }}</strong>
+                    </div>
                 </div>
-            </nav>
+                <a href="{{ route('cars.select') }}" class="btn btn-outline">CHANGE CAR</a>
+            @else
+                <span class="empty">You haven't picked a car yet.</span>
+                <a href="{{ route('cars.select') }}" class="btn">CHOOSE YOUR CAR</a>
+            @endif
+        </div>
+
+        <!-- QUICK ACTIONS -->
+        <div class="dash-grid">
+
+            <a href="{{ route('game') }}" class="dash-card">
+                <span class="icon">▶</span>
+                <h3>Play the Game</h3>
+                <p>Jump straight onto the track and start racing.</p>
+            </a>
+
+            <a href="{{ route('cars.select') }}" class="dash-card">
+                <span class="icon">🏎</span>
+                <h3>Garage</h3>
+                <p>Browse every brand & model and pick your ride.</p>
+            </a>
+
+            <a href="{{ route('profile.edit') }}" class="dash-card">
+                <span class="icon">⚙</span>
+                <h3>Account Settings</h3>
+                <p>Update your name, email and password.</p>
+            </a>
 
         </div>
-    </div>
-</x-app-layout>
+
+    </main>
+
+</body>
+</html>
